@@ -17,14 +17,13 @@ public:
 	std::istream &read(std::istream &in);
 	void removeNotAlpha(std::istream &in);
 	void writeWord(std::istream &in);
-	bool hasStillValidChar(std::istream &in);
-	bool isValidWord(std::string word);
+	bool isValidWord(std::string word) const;
 
 	friend inline std::ostream &operator<<(std::ostream &out, Word const &word) {
 		return word.print(out);
 	}
 
-	friend inline std::istream &operator>>(std::istream &in, Word word) {
+	friend inline std::istream &operator>>(std::istream &in, Word &word) {
 		return word.read(in);
 	}
 };

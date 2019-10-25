@@ -14,59 +14,37 @@ Word::Word(string word)
 		}
 }
 
-bool Word::isValidWord(string word) {
-	bool isValid{true};
-	for_each(cbegin(word), cend(word), [&isValid] (auto const character) {
-		if (!isalpha(character)) {
-			isValid = false;
-			return isValid;
-		}
-	});
-	return isValid;
-}
-
-bool Word::hasStillValidChar(istream &in) {
-	bool hasValidChar{false};
-	while (!in.eof()) {
-		if (isalpha(in.peek())) {
-			hasValidChar = true;
-		}
+bool Word::isValidWord(string word) const {
+	if (word.empty()) {
+		return false;
 	}
-	return hasValidChar;
+	all_of(cbegin(word), cend(word), [] (auto const character) {
+		return isalpha(character);
+	});
+	return false;
 }
 
 void Word::removeNotAlpha(istream &in) {
-	while(!in.eof()) {
-		if (!isalpha(in.peek())) {
-			in.get();
-		}
-		else {
-			break;
-		}
+	while(!isalpha(in.peek())) {
+		in.get();
 	}
 }
 
 void Word::writeWord(istream &in) {
-	while (!in.eof()) {
-		if (isalpha(in.peek())) {
-			word.push_back(in.get());
-		}
+	string writeString{ };
+	while (isalpha(in.peek()) != 0) {
+		writeString.push_back(in.get());
 	}
+	word = writeString;
 }
 
 istream &Word::read(istream &in) {
-	bool hasValidChars{false};
-	while (!in.eof()) {
-		hasValidChars = hasStillValidChar(in);
-		if (hasValidChars) {
-			word.clear();
-			removeNotAlpha(in);
-			writeWord(in);
-		}
+	if (!in.eof()) {
+		removeNotAlpha(in);
+		writeWord(in);
 	}
 	return in;
 }
-
 
 ostream &Word::print(ostream &out) const {
 	out << word;
