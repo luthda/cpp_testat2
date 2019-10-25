@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <iterator>
 #include <stdexcept>
 
 using namespace std;
@@ -18,10 +19,11 @@ bool Word::isValidWord(string word) const {
 	if (word.empty()) {
 		return false;
 	}
-	all_of(cbegin(word), cend(word), [] (auto const character) {
+	bool valid{ };
+	valid = all_of(begin(word), end(word), [] (auto const character) {
 		return isalpha(character);
 	});
-	return false;
+	return valid;
 }
 
 void Word::removeNotAlpha(istream &in) {
@@ -49,6 +51,18 @@ istream &Word::read(istream &in) {
 ostream &Word::print(ostream &out) const {
 	out << word;
 	return out;
+}
+
+bool Word::operator<(Word const &rhs) const {
+	return lexicographical_compare(begin(word), end(word), begin(rhs.word), end(rhs.word), [] (char leftChar, char rightChar) {
+		return tolower(leftChar) < tolower(rightChar);
+	});
+}
+
+bool Word::operator==(Word const &rhs) const {
+	return equal(begin(word), end(word), begin(rhs.word), end(rhs.word), [] (char leftChar, char rightChar) {
+		return tolower(leftChar) == tolower(rightChar);
+	});
 }
 
 
