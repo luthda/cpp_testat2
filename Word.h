@@ -6,7 +6,7 @@
 
 
 class Word {
-	std::string word;
+	std::string word{"default"};
 
 public:
 	Word() = default;
