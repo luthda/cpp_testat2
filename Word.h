@@ -27,7 +27,6 @@ public:
 	friend inline std::istream &operator>>(std::istream &in, Word &word) {
 		return word.read(in);
 	}
-
 };
 
 inline bool operator<=(Word const &lhs, Word const &rhs) {

@@ -27,24 +27,25 @@ bool Word::isValidWord(string word) const {
 }
 
 void Word::removeNotAlpha(istream &in) {
-	while(!isalpha(in.peek())) {
+	while(in.good() && !isalpha(in.peek())) {
 		in.get();
 	}
 }
 
 void Word::writeWord(istream &in) {
 	string writeString{ };
-	while (isalpha(in.peek()) != 0) {
+	while (in.good() && isalpha(in.peek())) {
 		writeString.push_back(in.get());
 	}
-	word = writeString;
+	if (isValidWord(writeString)) {
+		word = writeString;
+	}
+
 }
 
 istream &Word::read(istream &in) {
-	if (!in.eof()) {
-		removeNotAlpha(in);
-		writeWord(in);
-	}
+	removeNotAlpha(in);
+	writeWord(in);
 	return in;
 }
 
