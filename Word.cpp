@@ -7,6 +7,7 @@
 #include <stdexcept>
 
 using namespace std;
+using namespace text;
 
 Word::Word(string word)
 	: word{word} {
@@ -34,7 +35,7 @@ void Word::removeNotAlpha(istream &in) {
 
 void Word::writeWord(istream &in) {
 	string writeString{ };
-	while (in.good() && isalpha(in.peek())) {
+	while (isalpha(in.peek())) {
 		writeString.push_back(in.get());
 	}
 	if (isValidWord(writeString)) {

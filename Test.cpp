@@ -6,6 +6,8 @@
 #include "cute_runner.h"
 #include <stdexcept>
 
+using namespace text;
+
 void testValidWord() {
 	std::ostringstream output{};
 	Word word{"Word"};

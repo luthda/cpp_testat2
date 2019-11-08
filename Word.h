@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-
+namespace text {
 class Word {
 	std::string word{"default"};
 
@@ -42,6 +42,8 @@ inline bool operator>=(Word const &lhs, Word const &rhs) {
 
 inline bool operator!=(Word const &lhs, Word const &rhs) {
 	return !(lhs == rhs);
+}
+
 }
 
 #endif /* WORD_H_ */
