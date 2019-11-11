@@ -1,4 +1,4 @@
-#include "Word.h"
+#include "word.h"
 #include <stdexcept>
 #include <string>
 #include <iostream>
