@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <set>
+#include <stdexcept>
 
 namespace text {
 
@@ -56,7 +57,7 @@ void printKwic(set<line> kwic, ostream &out) {
 }
 
 void kwic(istream &in, ostream &out){
-	set<line> kwic = createKwic(getFullText(in));
-	printKwic(kwic, out);
+		set<line> kwic = createKwic(getFullText(in));
+		printKwic(kwic, out);
 }
 }
