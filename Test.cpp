@@ -1,9 +1,9 @@
-#include "Word.h"
-
 #include "cute.h"
 #include "ide_listener.h"
 #include "xml_listener.h"
 #include "cute_runner.h"
+#include "word.h"
+#include "kwic.h"
 #include <stdexcept>
 
 using namespace text;
@@ -275,17 +275,52 @@ void test_exercise_example() {
 	ASSERT_EQUAL(Word{"put"}, w);
 }
 
+void test_kwic_easy() {
+	std::istringstream input{"this is only a easy test"};
+	std::ostringstream output{};
+	kwic(input, output);
+	ASSERT_EQUAL(
+			"a easy test this is only \n"
+			"easy test this is only a \n"
+			"is only a easy test this \n"
+			"only a easy test this is \n"
+			"test this is only a easy \n"
+			"this is only a easy test \n", output.str());
+}
+
+void test_kwic_example() {
+	std::istringstream input{" this is a test \n this is another test"};
+	std::ostringstream output{};
+	kwic(input, output);
+	ASSERT_EQUAL(
+			"a test this is \n"
+			"another test this is \n"
+			"is a test this \n"
+			"is another test this \n"
+			"test this is a \n"
+			"test this is another \n"
+			"this is a test \n"
+			"this is another test \n", output.str());
+}
+
+void test_kwic_empty() {
+	std::istringstream input{""};
+	std::ostringstream output{};
+	kwic(input, output);
+	ASSERT_THROWS(output, std::invalid_argument);
+}
 
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	//TODO add your test here
 	s.push_back(CUTE(thisIsATest));
-	s.push_back(CUTE(testPrintStream));
-	s.push_back(CUTE(testOutStream));
-	s.push_back(CUTE(testPrintTwoWordStream));
 	s.push_back(CUTE(testValidWord));
+	s.push_back(CUTE(testValidWord2));
 	s.push_back(CUTE(testInvalidWord));
 	s.push_back(CUTE(testEmptyWord));
+	s.push_back(CUTE(testPrintStream));
+	s.push_back(CUTE(testPrintTwoWordStream));
+	s.push_back(CUTE(testOutStream));
 	s.push_back(CUTE(testGreaterThan));
 	s.push_back(CUTE(testGreaterThanOrEqual));
 	s.push_back(CUTE(testEqual));
@@ -306,22 +341,25 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_same_word_with_different_cases_are_not_smaller));
 	s.push_back(CUTE(test_greater_word_with_capital_letters_is_greater));
 	s.push_back(CUTE(test_smaller_word_is_less_equal));
+	s.push_back(CUTE(test_greater_word_is_greater));
 	s.push_back(CUTE(test_same_word_is_less_equal));
 	s.push_back(CUTE(test_greater_word_is_greater_equal));
 	s.push_back(CUTE(test_same_word_is_greater_equal));
-	s.push_back(CUTE(test_greater_word_is_greater));
-	s.push_back(CUTE(test_input_operator_called_once_first_word));
-	s.push_back(CUTE(test_input_operator_called_once_stream_good));
 	s.push_back(CUTE(test_input_operator_single_word));
 	s.push_back(CUTE(test_input_operator_single_word_stream_good));
+	s.push_back(CUTE(test_input_operator_called_once_first_word));
+	s.push_back(CUTE(test_input_operator_called_once_stream_good));
+	s.push_back(CUTE(test_input_operator_on_empty_stream_fail));
+	s.push_back(CUTE(test_input_operator_on_stream_without_word));
 	s.push_back(CUTE(test_input_operator_on_empty_stream_word_unchanged));
 	s.push_back(CUTE(test_input_operator_stops_on_slash));
-	s.push_back(CUTE(test_input_operator_on_empty_stream_fail));
-	s.push_back(CUTE(testValidWord2));
 	s.push_back(CUTE(test_input_operator_stops_at_end_of_word));
 	s.push_back(CUTE(test_input_operator_skips_leading_non_alpha));
 	s.push_back(CUTE(test_input_operator_overwrites_word));
 	s.push_back(CUTE(test_exercise_example));
+	s.push_back(CUTE(test_kwic_easy));
+	s.push_back(CUTE(test_kwic_example));
+	s.push_back(CUTE(test_kwic_empty));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner = cute::makeRunner(lis, argc, argv);

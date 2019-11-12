@@ -6,8 +6,9 @@
 #include <iterator>
 #include <stdexcept>
 
+namespace text{
+
 using namespace std;
-using namespace text;
 
 Word::Word(string word)
 	: word{word} {
@@ -67,4 +68,5 @@ bool Word::operator==(Word const &rhs) const {
 	});
 }
 
+}
 
