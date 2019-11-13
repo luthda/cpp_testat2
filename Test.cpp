@@ -1,9 +1,11 @@
+#include "word.h"
+#include "kwic.h"
+
 #include "cute.h"
 #include "ide_listener.h"
 #include "xml_listener.h"
 #include "cute_runner.h"
-#include "word.h"
-#include "kwic.h"
+
 #include <stdexcept>
 
 using namespace text;

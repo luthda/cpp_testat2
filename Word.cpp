@@ -1,7 +1,5 @@
 #include "word.h"
-#include <stdexcept>
-#include <string>
-#include <iostream>
+
 #include <algorithm>
 #include <iterator>
 #include <stdexcept>

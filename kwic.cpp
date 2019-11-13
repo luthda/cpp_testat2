@@ -13,7 +13,6 @@ namespace text {
 	using namespace std;
 	using line = vector<Word>;
 
-
 	line createWordLine(string inputLine) {
 		using wordIt = istream_iterator<Word>;
 		istringstream strStream{inputLine};
