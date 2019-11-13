@@ -289,7 +289,7 @@ void test_kwic_easy() {
 }
 
 void test_kwic_example() {
-	std::istringstream input{" this is a test \n this is another test"};
+	std::istringstream input{"this is a test \n this is another test"};
 	std::ostringstream output{};
 	kwic(input, output);
 	ASSERT_EQUAL(
@@ -301,13 +301,6 @@ void test_kwic_example() {
 			"test this is another \n"
 			"this is a test \n"
 			"this is another test \n", output.str());
-}
-
-void test_kwic_empty() {
-	std::istringstream input{""};
-	std::ostringstream output{};
-	kwic(input, output);
-	ASSERT_THROWS(output, std::invalid_argument);
 }
 
 bool runAllTests(int argc, char const *argv[]) {
@@ -359,7 +352,6 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_exercise_example));
 	s.push_back(CUTE(test_kwic_easy));
 	s.push_back(CUTE(test_kwic_example));
-	s.push_back(CUTE(test_kwic_empty));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner = cute::makeRunner(lis, argc, argv);
