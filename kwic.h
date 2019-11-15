@@ -1,7 +1,7 @@
 #ifndef KWIC_H_
 #define KWIC_H_
 
-#include <iostream>
+#include <iosfwd>
 
 namespace text {
 

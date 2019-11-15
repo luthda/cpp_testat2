@@ -8,44 +8,43 @@ namespace text{
 
 	using namespace std;
 
-	Word::Word(string word)
-		: word{word} {
-			if (!isValidWord(word)) {
-				throw invalid_argument("this is not a word!!!!!");
-			}
-	}
-
-	bool Word::isValidWord(string word) const {
+	bool isValidWord(string word) const {
 		if (word.empty()) {
 			return false;
 		}
-		bool valid{ };
-		valid = all_of(begin(word), end(word), [] (auto const character) {
+		return all_of(begin(word), end(word), [] (auto const character) {
 			return isalpha(character);
 		});
-		return valid;
 	}
 
-	void Word::removeNotAlpha(istream &in) {
+	Word::Word(string word)
+		: word{word} {
+			if (!isValidWord(word)) {
+				throw invalid_argument{"this is not a word!!!!!"};
+			}
+	}
+
+	void removeNotAlpha(istream &in) {
 		while(in.good() && !isalpha(in.peek())) {
-			in.get();
+			in.ignore();
 		}
 	}
 
-	void Word::writeWord(istream &in) {
+	string  readWord(istream &in) {
 		string writeString{ };
 		while (isalpha(in.peek())) {
 			writeString.push_back(in.get());
 		}
-		if (isValidWord(writeString)) {
-			word = writeString;
-		}
+		return writeString;
 
 	}
 
 	istream &Word::read(istream &in) {
 		removeNotAlpha(in);
-		writeWord(in);
+		string newWord = readWord(in);
+		if (isValidWord(newWord)) {
+			word = newWord;
+		}
 		return in;
 	}
 

@@ -33,12 +33,11 @@ namespace text {
 	set<line> createKwic(vector<line> fullText) {
 		set<line> kwic{};
 		for_each(cbegin(fullText), cend(fullText), [&kwic](line const currLine){
-			line rotatedLine{};
 			auto it = begin(currLine);
 			while(it != end(currLine)) {
+				line rotatedLine{};
 				rotate_copy(begin(currLine), it, end(currLine), std::back_inserter(rotatedLine));
 				kwic.insert(rotatedLine);
-				rotatedLine.clear();
 				++it;
 			}
 		});
@@ -55,7 +54,7 @@ namespace text {
 	}
 
 	void kwic(istream &in, ostream &out){
-			set<line> kwic = createKwic(getFullText(in));
-			printKwic(kwic, out);
+		set<line> kwic = createKwic(getFullText(in));
+		printKwic(kwic, out);
 	}
 }
