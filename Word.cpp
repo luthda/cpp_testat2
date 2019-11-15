@@ -8,7 +8,7 @@ namespace text{
 
 	using namespace std;
 
-	bool isValidWord(string word) const {
+	bool isValidWord(string word) {
 		if (word.empty()) {
 			return false;
 		}

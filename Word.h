@@ -23,7 +23,7 @@ namespace text {
 		return word.print(out);
 	}
 
-	friend inline std::istream &operator>>(std::istream &in, Word &word) {
+	inline std::istream &operator>>(std::istream &in, Word &word) {
 		return word.read(in);
 	}
 
